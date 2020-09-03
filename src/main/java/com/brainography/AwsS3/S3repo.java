@@ -32,18 +32,12 @@ public class S3repo {
     }
 
     protected AmazonS3 getAmazonS3Client() {
-        AWSCredentials credentials = getCredentials(Constant.accessKey, Constant.SecretAccessKey);
+        AWSCredentials credentials = new BasicAWSCredentials(Constant.accessKey, Constant.SecretAccessKey);
         AWSCredentialsProvider credProvider = new AWSStaticCredentialsProvider(credentials);
-        AmazonS3 client = AmazonS3ClientBuilder.standard()
+        return AmazonS3ClientBuilder.standard()
                 .withCredentials(credProvider)
                 .withRegion(Regions.US_WEST_2)
                 .build();
-        return client;
-    }
-
-    protected AWSCredentials getCredentials(String accessKey, String secretAccessKey) {
-        AWSCredentials credentials = new BasicAWSCredentials(accessKey,secretAccessKey);
-        return credentials;
     }
 
     public void createBucket(String bucketName) throws AmazonS3Exception {
